@@ -2,7 +2,10 @@
 const nextConfig = {
   reactCompiler: true,
   async rewrites() {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+    const apiUrl =
+      process.env.NEXT_PUBLIC_API_URL ||
+      process.env.SERVER_URL ||
+      "http://localhost:5000";
 
     return [
       {
