@@ -15,12 +15,9 @@ import {
   TextField,
 } from "@heroui/react";
 import { ArrowRight, Sparkles, ShieldCheck, Store } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function SignInPage() {
-  const router = useRouter();
-
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -39,7 +36,7 @@ export default function SignInPage() {
       }
 
       toast.success("Login successful.");
-      router.push("/");
+      window.location.href = "/";
     } catch (error) {
       toast.error(error?.message || "Login failed. Please try again.");
     }
