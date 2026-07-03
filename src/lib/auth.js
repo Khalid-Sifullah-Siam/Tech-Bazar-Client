@@ -8,7 +8,24 @@ import { jwt } from "better-auth/plugins";
 const client = new MongoClient(process.env.MONGODB_URI);
 const db = client.db("tech-bazaar");
 
+function cleanUrl(url) {
+  if (!url) {
+    return "";
+  }
+
+  return url.trim().replace(/\/$/, "");
+}
+
+const appUrl = cleanUrl(process.env.BETTER_AUTH_URL);
+const trustedOrigins = [
+  appUrl,
+  "http://localhost:3000",
+  "http://localhost:3001",
+].filter(Boolean);
+
 export const auth = betterAuth({
+  baseURL: appUrl,
+  trustedOrigins,
   database: mongodbAdapter(db, {
     client,
   }),
