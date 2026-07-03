@@ -16,15 +16,30 @@ function cleanUrl(url) {
   return url.trim().replace(/\/$/, "");
 }
 
+function getExtraOrigins() {
+  const originsText = process.env.TRUSTED_ORIGINS || "";
+
+  return originsText
+    .split(",")
+    .map((origin) => cleanUrl(origin))
+    .filter(Boolean);
+}
+
 const appUrl = cleanUrl(process.env.BETTER_AUTH_URL);
+const vercelUrl = process.env.VERCEL_URL
+  ? `https://${cleanUrl(process.env.VERCEL_URL)}`
+  : "";
+
 const trustedOrigins = [
   appUrl,
+  vercelUrl,
+  ...getExtraOrigins(),
   "http://localhost:3000",
   "http://localhost:3001",
 ].filter(Boolean);
 
 export const auth = betterAuth({
-  baseURL: appUrl,
+  baseURL: appUrl || vercelUrl,
   trustedOrigins,
   database: mongodbAdapter(db, {
     client,
