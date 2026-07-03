@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ToastProvider from "@/components/ToastProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,8 +20,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.className} h-full antialiased`}>
       <body>
+        <ToastProvider />
         <Navbar />
-        <main className="max-w-7xl mx-auto px-2 min-h-screen">
+        <main className="px-2 min-h-screen">
           {children}
         </main>
 

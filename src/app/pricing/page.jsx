@@ -1,10 +1,12 @@
 import { Button } from "@heroui/react";
+import Link from "next/link";
 
 export default function SellerPricingPage() {
   const plans = [
     {
       name: "Starter Seller",
       price: "$4",
+      productId: "prod_UoRz8cmwbdVkjk",
       period: "/month",
       description: "Perfect for new sellers starting their journey.",
       features: [
@@ -19,6 +21,7 @@ export default function SellerPricingPage() {
     {
       name: "Professional Seller",
       price: "$14",
+      productId: "prod_UoSNyHAAgCzf3T",
       period: "/month",
       description: "For growing businesses that need more visibility.",
       features: [
@@ -116,13 +119,24 @@ export default function SellerPricingPage() {
               </ul>
 
               {plan.name === "Enterprise Seller" ? (
-                <Button
-                  className={`mt-8 w-full  font-medium`}
-                >Contact Sales</Button>
+                <Link
+                  href="/contact-sales"
+                  className="mt-8 inline-flex w-full items-center justify-center bg-blue-500 text-white rounded-4xl px-4 py-3 font-medium text-primary-foreground"
+                >
+                  Contact Sales
+                </Link>
               ) : (
-                <Button
-                  className={`mt-8 w-full  font-medium`}
-                >Become Seller</Button>
+                <form action="/api/checkout_sessions" method="POST">
+                  <input type="hidden" name="planName" value={plan.name} />
+                  <input type="hidden" name="productId" value={plan.productId} />
+
+                  <Button
+                    type="submit"
+                    className={`mt-8 w-full  font-medium`}
+                  >
+                    Become Seller
+                  </Button>
+                </form>
               )}
             </div>
           ))}

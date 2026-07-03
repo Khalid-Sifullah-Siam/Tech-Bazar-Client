@@ -1,3 +1,5 @@
+'use client'
+
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -8,8 +10,14 @@ import {
 import { FaFacebook } from "react-icons/fa";
 import { BsInstagram, BsTwitter } from "react-icons/bs";
 import { LiaLinkedin } from "react-icons/lia";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+
+  const pathname = usePathname();
+    if(pathname.includes('dashboard')){
+      return null;
+    }
   return (
     <footer className="mt-16 border-t bg-background">
       <div className="container mx-auto px-4">

@@ -23,14 +23,19 @@ export const auth = betterAuth({
       plan: {
         defaultValue: "free",
       },
+      sellerPlanName: {
+        defaultValue: "",
+      },
     },
   },
   session: {
     cookieCache: {
-      enabled: true,
+      enabled: false,
       strategy: "jwt",
       maxAge: 60 * 24 * 60,
     },
   },
   plugins: [jwt()],
 });
+
+export { client, db };

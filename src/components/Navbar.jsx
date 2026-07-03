@@ -4,7 +4,7 @@ import { authClient } from "@/lib/auth-client";
 import { Avatar, Button, Dropdown, Label } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 import { BiLogOut } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { MdDashboard } from "react-icons/md";
@@ -15,6 +15,7 @@ const Navbar = () => {
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
+ 
 
   const handleSignOut = async () => {
     await authClient.signOut();
@@ -77,16 +78,18 @@ const Navbar = () => {
           <ul className="hidden items-center gap-4 md:flex">
             <li>
               <Link
-                href="#"
+                href="/products"
                 className="font-medium text-accent"
                 aria-current="page"
               >
                 Browse Products
               </Link>
             </li>
-            <li>
-              <Link href="/pricing">Pricing</Link>
-            </li>
+            {user?.role === "seller" && (
+              <li>
+                <Link href="/pricing">Pricing</Link>
+              </li>
+            )}
           </ul>
          {!user && (
             <div className="hidden items-center gap-4 md:flex">
@@ -131,13 +134,13 @@ const Navbar = () => {
                     onAction={(key) => console.log(`Selected: ${key}`)}
                   >
                     <Dropdown.Item id="new-file" textValue="New file">
-                      {/* <Link
+                      <Link
                         className="flex items-center gap-2"
                         href={`/dashboard/${user?.role}`}
-                      > */}
+                      >
                         <MdDashboard />
                         <Label>Dashboard</Label>
-                      {/* </Link> */}
+                      </Link>
                     </Dropdown.Item>
 
                     <Dropdown.Item id="copy-link" textValue="Copy link">
@@ -164,8 +167,8 @@ const Navbar = () => {
           <div className="border-t border-separator md:hidden">
             <ul className="flex flex-col gap-2 p-4">
               <li>
-                <Link href="#" className="block py-2">
-                  Features
+                <Link href="/products" className="block py-2">
+                  Browse Products
                 </Link>
               </li>
               <li>
@@ -173,16 +176,20 @@ const Navbar = () => {
                   Dashboard
                 </Link>
               </li>
-              <li>
-                <Link href="#" className="block py-2">
-                  Pricing
-                </Link>
-              </li>
+              {user?.role === "seller" && (
+                <li>
+                  <Link href="/pricing" className="block py-2">
+                    Pricing
+                  </Link>
+                </li>
+              )}
               <li className="mt-4 flex flex-col gap-2 border-t border-separator pt-4">
-                <Link href="#" className="block py-2">
+                <Link href="/signin" className="block py-2">
                   Login
                 </Link>
-                <Button className="w-full">Sign Up</Button>
+                <Link href="/signup">
+                  <Button className="w-full">Sign Up</Button>
+                </Link>
               </li>
             </ul>
           </div>
