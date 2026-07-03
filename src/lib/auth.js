@@ -16,6 +16,10 @@ function cleanUrl(url) {
   return url.trim().replace(/\/$/, "");
 }
 
+function isLocalhostUrl(url) {
+  return url.includes("localhost") || url.includes("127.0.0.1");
+}
+
 function getExtraOrigins() {
   const originsText = process.env.TRUSTED_ORIGINS || "";
 
@@ -25,10 +29,14 @@ function getExtraOrigins() {
     .filter(Boolean);
 }
 
-const appUrl = cleanUrl(process.env.BETTER_AUTH_URL);
+const authUrl = cleanUrl(process.env.BETTER_AUTH_URL);
 const vercelUrl = process.env.VERCEL_URL
   ? `https://${cleanUrl(process.env.VERCEL_URL)}`
   : "";
+const appUrl =
+  process.env.NODE_ENV === "production" && isLocalhostUrl(authUrl)
+    ? vercelUrl
+    : authUrl;
 
 const trustedOrigins = [
   appUrl,

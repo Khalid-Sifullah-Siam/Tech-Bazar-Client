@@ -16,10 +16,12 @@ import {
   TextField,
 } from "@heroui/react";
 import { ArrowRight, Sparkles, ShieldCheck, Store } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
 export default function SignUpPage() {
+  const router = useRouter();
   const [isUploading, setIsUploading] = useState(false);
   const [selectedImageName, setSelectedImageName] = useState("");
   const [profileImageUrl, setProfileImageUrl] = useState("");
@@ -44,7 +46,8 @@ export default function SignUpPage() {
       }
 
       toast.success("Signup successful.");
-      window.location.href = "/";
+      router.refresh();
+      router.push("/");
     } catch (error) {
       toast.error(error?.message || "Signup failed. Please try again.");
     }
