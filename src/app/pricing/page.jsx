@@ -112,16 +112,12 @@ export default function SellerPricingPage() {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
-
                     </svg>
                     {feature}
                   </li>
                 ))}
               </ul>
 
-
-
-              
 
               {plan.name === "Enterprise Seller" ? (
                 <Link
